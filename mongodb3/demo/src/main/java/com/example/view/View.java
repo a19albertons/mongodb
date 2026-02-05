@@ -57,9 +57,15 @@ public class View {
             // controladorGeneral.getEmpleadoController().crearPartida(new
             // Gson().toJson(partida5));
 
-            List<Bson> filtros = List.of(
+            // Consulta 1 - puntuacion total de cada jugador
+            List<Bson> filtros1 = List.of(
                     group("$xogador", Accumulators.sum("puntuacionSumada", "$puntuacion")));
-            System.out.println(controladorGeneral.getPartidaController().Consultador(filtros));
+            System.out.println(controladorGeneral.getPartidaController().Consultador(filtros1));
+
+            // Consulta 2- mellor partida de cada xogador
+            List<Bson> filtros2 = List.of(
+                    group("$xogador", Accumulators.max("puntuacionMaxima", "$puntuacion")));
+            System.out.println(controladorGeneral.getPartidaController().Consultador(filtros2));
         } catch (Exception e) {
             System.out.println("Fallo en la vista no esperado");
             System.out.println(e.getMessage());
