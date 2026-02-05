@@ -13,7 +13,11 @@ import com.mongodb.client.model.Accumulators;
 import com.mongodb.client.model.Sorts;
 
 import static com.mongodb.client.model.Aggregates.group;
+import static com.mongodb.client.model.Aggregates.project;
 import static com.mongodb.client.model.Aggregates.sort;
+import static com.mongodb.client.model.Projections.exclude;
+import static com.mongodb.client.model.Projections.fields;
+import static com.mongodb.client.model.Projections.include;
 
 /**
  * Vista de la aplicación
@@ -74,13 +78,20 @@ public class View {
                     group("$xogo", Accumulators.min("menorDuracion", "$duracion")));
             System.out.println(controladorGeneral.getPartidaController().consultador(filtros3));
 
-            // Consulta 4 - Ranking de xogadores por puntuación total acumulada y ordenado de maior a menor
+            // Consulta 4 - Ranking de xogadores por puntuación total acumulada y ordenado
+            // de maior a menor
             List<Bson> filtros4 = List.of(
                     group("$xogador", Accumulators.sum("puntuacionMaxima", "$puntuacion")),
-                    sort(Sorts.descending("puntuacionMaxima"))
-
-                );
+                    sort(Sorts.descending("puntuacionMaxima")));
             System.out.println(controladorGeneral.getPartidaController().consultador(filtros4));
+
+            // Consulta 5 - Listaxe de partidas
+            List<Bson> filtros5 = List.of(
+                project(fields(include("xogador","xogo","puntuacion"))),
+                project(fields(exclude("_id")))
+            );
+            System.out.println(controladorGeneral.getPartidaController().consultador(filtros5));
+
         } catch (Exception e) {
             System.out.println("Fallo en la vista no esperado");
             System.out.println(e.getMessage());
