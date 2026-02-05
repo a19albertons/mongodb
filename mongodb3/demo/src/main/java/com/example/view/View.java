@@ -10,7 +10,10 @@ import com.example.controller.ControladorGeneral;
 import com.example.model.Partida;
 import com.google.gson.Gson;
 import com.mongodb.client.model.Accumulators;
+import com.mongodb.client.model.Sorts;
+
 import static com.mongodb.client.model.Aggregates.group;
+import static com.mongodb.client.model.Aggregates.sort;
 
 /**
  * Vista de la aplicación
@@ -68,8 +71,16 @@ public class View {
             System.out.println(controladorGeneral.getPartidaController().consultador(filtros2));
             // Consulta 3 - Partida máis curta por xogo
             List<Bson> filtros3 = List.of(
-                    group("$xogo", Accumulators.min("menorDuracion", "$puntuacion")));
+                    group("$xogo", Accumulators.min("menorDuracion", "$duracion")));
             System.out.println(controladorGeneral.getPartidaController().consultador(filtros3));
+
+            // Consulta 4 - Ranking de xogadores por puntuación total acumulada y ordenado de maior a menor
+            List<Bson> filtros4 = List.of(
+                    group("$xogador", Accumulators.sum("puntuacionMaxima", "$puntuacion")),
+                    sort(Sorts.descending("puntuacionMaxima"))
+
+                );
+            System.out.println(controladorGeneral.getPartidaController().consultador(filtros4));
         } catch (Exception e) {
             System.out.println("Fallo en la vista no esperado");
             System.out.println(e.getMessage());
