@@ -87,10 +87,16 @@ public class View {
 
             // Consulta 5 - Listaxe de partidas
             List<Bson> filtros5 = List.of(
-                project(fields(include("xogador","xogo","puntuacion"))),
-                project(fields(exclude("_id")))
-            );
+                    project(fields(include("xogador", "xogo", "puntuacion"))),
+                    project(fields(exclude("_id"))));
             System.out.println(controladorGeneral.getPartidaController().consultador(filtros5));
+
+            // Consulta 6 - Xogos máis puntuables
+            List<Bson> filtros6 = List.of(
+                group("$xogo", Accumulators.avg("media", "$puntuacion")),
+                sort(Sorts.descending("media"))
+            );
+            System.out.println(controladorGeneral.getPartidaController().consultador(filtros6));
 
         } catch (Exception e) {
             System.out.println("Fallo en la vista no esperado");
