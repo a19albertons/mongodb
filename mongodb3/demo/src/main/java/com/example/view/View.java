@@ -60,12 +60,16 @@ public class View {
             // Consulta 1 - puntuacion total de cada jugador
             List<Bson> filtros1 = List.of(
                     group("$xogador", Accumulators.sum("puntuacionSumada", "$puntuacion")));
-            System.out.println(controladorGeneral.getPartidaController().Consultador(filtros1));
+            System.out.println(controladorGeneral.getPartidaController().consultador(filtros1));
 
             // Consulta 2- mellor partida de cada xogador
             List<Bson> filtros2 = List.of(
                     group("$xogador", Accumulators.max("puntuacionMaxima", "$puntuacion")));
-            System.out.println(controladorGeneral.getPartidaController().Consultador(filtros2));
+            System.out.println(controladorGeneral.getPartidaController().consultador(filtros2));
+            // Consulta 3 - Partida máis curta por xogo
+            List<Bson> filtros3 = List.of(
+                    group("$xogo", Accumulators.min("menorDuracion", "$puntuacion")));
+            System.out.println(controladorGeneral.getPartidaController().consultador(filtros3));
         } catch (Exception e) {
             System.out.println("Fallo en la vista no esperado");
             System.out.println(e.getMessage());

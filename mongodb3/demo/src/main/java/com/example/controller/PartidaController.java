@@ -13,7 +13,8 @@ import com.mongodb.client.MongoCollection;
  * Controlador de empleados.
  */
 public class PartidaController {
-    private final MongoCollection<Document> collection = new MongoProvider().partidas(); // Si, soy consciente del resource leak
+    private final MongoCollection<Document> collection = new MongoProvider().partidas(); // Si, soy consciente del
+                                                                                         // resource leak
 
     /**
      * Crea una nueva partida en la base de datos.
@@ -24,7 +25,19 @@ public class PartidaController {
         collection.insertOne(Document.parse(partida));
     }
 
-    public ArrayList<Document> Consultador( List<Bson> filtros) {
-        return collection.aggregate(filtros).into(new ArrayList<>());
+    public ArrayList<Document> consultador( List<Bson> filtros) {
+        ArrayList<Document> resultado = new ArrayList<>();
+        try {
+            resultado =  collection.aggregate(filtros).into(new ArrayList<>());
+
+        }
+        catch(Exception e) {
+            System.out.println("ha surgido una catastrofe en la consulta");
+            System.out.println(e.getMessage());
+            System.out.println(e.getCause());
+            resultado = new ArrayList<>();
+        }
+        
+        return resultado;
     }
 }
