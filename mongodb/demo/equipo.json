@@ -1,0 +1,9 @@
+{
+    "nombre": "Madrid",
+    "ciudad": "Madrid",
+    "entrenador": {
+        "nombre": "Juan",
+        "ciudad": "London",
+        "telefono": "123456789"
+    }
+}

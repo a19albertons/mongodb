@@ -1,0 +1,29 @@
+// Tienda online
+
+// 1. Insertar 2 clientes y 3 pedidos.
+[
+    {
+        "idCliente":"1",
+        "nombre":"Paco",
+        "emails": [
+            "usuario@gmail.com",
+            "usuario@hotmail.com"
+        ],
+        "direcciones": [
+            "Calle Falsa 123, Madrid, España",
+            "cosa falsa 50, fdsam, Francia"
+        ]
+    },
+    {
+        "idCliente":"2",
+        "nombre":"Juan",
+        "emails": [
+            "usuario2@gmail.com",
+            "usuario2@hotmail.com"
+        ],
+        "direcciones": [
+            "Calle Real 123, Madrid, España",
+            "cosa Real 50, fdsam, Francia"
+        ]
+    }
+]

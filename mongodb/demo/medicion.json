@@ -1,0 +1,41 @@
+// IoT
+
+// 1. Insertar 3 mediciones con fechas distintas.
+[
+    {
+        "sensorId": "1",
+        "ts": ISODate("2024-06-01T00:00:00Z"),
+        "tipo":"temp",
+        "valor":22.0,
+        "ubicacion":"casa"
+    },
+    {
+        "sensorId": "2",
+        "ts": ISODate("2026-01-22T10:00:00Z"),
+        "tipo": "hum",
+        "valor":45.0,
+        "ubicacion": "oficina"
+    },
+    {
+        "sensorId": "3",
+        "ts": ISODate("2024-06-01T00:00:00Z"),
+        "tipo":"temp",
+        "valor": 15.6,
+        "ubicacion": "exterior"
+    }
+]
+
+// 2. Consultar por sensorId y rango ts (últimas 24h).
+db.medicion.find({ "ts": { $gt: new Date(Date.now() - 24*60*60*1000) } }, {sensorId:1, _id:0})
+
+
+// 3. Consultar mediciones por encima de umbral.
+db.medicion.find( {"tipo":"temp", "valor":{ $gt: 20} })
+
+// 4. Corregir mediciones erróneas (updateMany).
+db.medicion.updateMany( {"tipo":"temp", "valor":{$gt:20} }, {$set : { valor: 19} })
+
+// 5. Eliminar mediciones anteriores a una fecha (deleteMany).
+db.medicion.deleteMany( {"ts":{$lt: ISODate("2026-01-20") } })
+
+

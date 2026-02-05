@@ -1,0 +1,105 @@
+[
+    {
+        "idPedido": 1,
+        "idCliente": "1",
+        "fecha": Date(),
+        "lineas": [
+            {
+                "sku": "1",
+                "nombre": "producto",
+                "cantidad": 22,
+                "precio": 30.0
+            },
+            {
+                "sku": "2",
+                "nombre": "producto 2",
+                "cantidad": 105,
+                "precio": 105.0
+            }
+        ],
+        "estado": "enviado"
+    },
+    {
+        "idPedido": 2,
+        "idCliente": "2",
+        "fecha": Date(),
+        "lineas": [
+            {
+                "sku": "3",
+                "nombre": "producto 3",
+                "cantidad": 5,
+                "precio": 50.0
+            }
+        ],
+        "estado":"pendiente"
+    },
+    {
+        "idPedido": 3,
+        "idCliente": "1",
+        "fecha": Date(),
+        "lineas": [
+            {
+                "sku": "4",
+                "nombre": "producto 4",
+                "cantidad": 12,
+                "precio": 12.0
+            }
+        ],
+        "estado":"enviado"
+    }
+]
+
+// 2. Pedidos de un cliente por idCliente
+db.pedidos.find({"idCliente":"1"})
+
+// 3. Pedidos con cantidad > 100
+db.pedidos.find({"lineas.cantidad": {$gt: 100}})
+
+db.pedidos.find({ $expr: { $gt: [ { $sum: "$lineas.cantidad"}, 120] }})
+
+db.pedidos.aggregate([
+    {
+        $project: {
+            __id: 0,
+            idPedido: 1,
+            idCliente: 1,
+            fecha: 1,
+            estado: 1,
+            cantidadTotal: { $sum: "$lineas.cantidad"}
+        }
+    },
+    {
+        $match: {
+            cantidadTotal: { $gt: 100 }
+        }
+    }
+
+])
+
+db.pedidos.aggregate(
+[
+    { $unwind: "$lineas" },
+    {
+        $match: {
+            cantidadTotal: { $gt: 100 }
+        }
+    },
+    {
+        $project : {
+            __id:0,
+            idPedido:1,
+            idCliente:1,
+            fecha:1,
+            estado:1,
+            cantidadTotal: { $sum: "$lineas.cantidad"}
+        }
+    }
+
+
+])
+
+// 4. Cambiar el estado de un pedido.
+db.pedidos.updateOne({"idPedido":2},{$set: {"estado": "enviado"}})
+
+// 5. Cambiar el email principal de un cliente.
+db.clientes.updateOne({idCliente: "1"}, {$set: { "emails.0" : "nuevoemail@gmail.com"}})
