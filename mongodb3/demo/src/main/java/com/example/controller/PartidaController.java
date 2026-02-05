@@ -1,6 +1,10 @@
 package com.example.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 import com.example.utils.MongoProvider;
 import com.mongodb.client.MongoCollection;
@@ -9,7 +13,7 @@ import com.mongodb.client.MongoCollection;
  * Controlador de empleados.
  */
 public class PartidaController {
-    private final MongoCollection<Document> collection = new MongoProvider().partidas();
+    private final MongoCollection<Document> collection = new MongoProvider().partidas(); // Si, soy consciente del resource leak
 
     /**
      * Crea una nueva partida en la base de datos.
@@ -20,5 +24,7 @@ public class PartidaController {
         collection.insertOne(Document.parse(partida));
     }
 
-    public void consultarPartidas(List<Bson> filtros)
+    public ArrayList<Document> Consultador( List<Bson> filtros) {
+        return collection.aggregate(filtros).into(new ArrayList<>());
+    }
 }

@@ -6,7 +6,7 @@ import com.example.view.View;
  * Controlador general de la aplicación
  */
 public class ControladorGeneral {
-    private PartidaController empleadoController;
+    private PartidaController partidaController;
     private View view;
 
     /**
@@ -14,15 +14,15 @@ public class ControladorGeneral {
      * 
      * @return devuelve el controlador de empleados
      */
-    public PartidaController getEmpleadoController() {
-        return empleadoController;
+    public PartidaController getPartidaController() {
+        return partidaController;
     }
 
     /**
      * constructor del Controlador general
      */
     public ControladorGeneral() {
-        this.empleadoController = new PartidaController();
+        this.partidaController = new PartidaController();
         this.view = new View(this);
     }
 
