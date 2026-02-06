@@ -14,6 +14,7 @@ public class App
         MongoProviderSingleton mongoProviderSingleton = MongoProviderSingleton.getInstance();
         ControladorGeneral controladorGeneral = new ControladorGeneral(mongoProviderSingleton);
         controladorGeneral.inicializar();
+        // Cerramos la conexión con MongoDB al finalizar la aplicación
         mongoProviderSingleton.close();
 
     }
