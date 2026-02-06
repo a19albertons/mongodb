@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.utils.MongoProviderSingleton;
 import com.example.view.View;
 
 /**
@@ -7,6 +8,7 @@ import com.example.view.View;
  */
 public class ControladorGeneral {
     private PartidaController partidaController;
+    private MongoProviderSingleton mongoProviderSingleton;
     private View view;
 
     /**
@@ -21,8 +23,9 @@ public class ControladorGeneral {
     /**
      * constructor del Controlador general
      */
-    public ControladorGeneral() {
-        this.partidaController = new PartidaController();
+    public ControladorGeneral(MongoProviderSingleton mongoProviderSingleton) {
+        this.mongoProviderSingleton = mongoProviderSingleton;
+        this.partidaController = new PartidaController(this.mongoProviderSingleton);
         this.view = new View(this);
     }
 

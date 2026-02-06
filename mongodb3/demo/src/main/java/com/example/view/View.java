@@ -1,23 +1,20 @@
 package com.example.view;
 
-import java.util.List;
-import java.util.Scanner;
-
-import org.bson.Document;
-import org.bson.conversions.Bson;
-
-import com.example.controller.ControladorGeneral;
-import com.example.model.Partida;
-import com.google.gson.Gson;
-import com.mongodb.client.model.Accumulators;
-import com.mongodb.client.model.Sorts;
-
 import static com.mongodb.client.model.Aggregates.group;
 import static com.mongodb.client.model.Aggregates.project;
 import static com.mongodb.client.model.Aggregates.sort;
 import static com.mongodb.client.model.Projections.exclude;
 import static com.mongodb.client.model.Projections.fields;
 import static com.mongodb.client.model.Projections.include;
+
+import java.util.List;
+import java.util.Scanner;
+
+import org.bson.conversions.Bson;
+
+import com.example.controller.ControladorGeneral;
+import com.mongodb.client.model.Accumulators;
+import com.mongodb.client.model.Sorts;
 
 /**
  * Vista de la aplicación
