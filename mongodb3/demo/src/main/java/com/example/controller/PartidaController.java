@@ -25,6 +25,11 @@ public class PartidaController {
         collection.insertOne(Document.parse(partida));
     }
 
+    /**
+     * Funcion que realiza una consulta avanzada
+     * @param filtros Listado de bson que actuan como filtro
+     * @return devuelve el resultado como un array de document de mongo db
+     */
     public ArrayList<Document> consultador( List<Bson> filtros) {
         ArrayList<Document> resultado = new ArrayList<>();
         try {
